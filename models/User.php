@@ -21,7 +21,7 @@ class User
     public function read()
     {
 
-        $sql = "select * from " . $this->table_name;
+        $sql = "select * from {$this->table_name}";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -34,7 +34,7 @@ class User
     public function create()
     {
 
-        $sql = "INSERT INTO " . $this->table_name . " set 
+        $sql = "INSERT INTO {$this->table_name} set 
                 id = null, 
                 email = '" . $this->email . "',
                 firstName = '" . $this->firstName . "',
@@ -62,7 +62,7 @@ class User
     public function readOneUser()
     {
 
-        $sql = "select * from " . $this->table_name . " where id = ? ";
+        $sql = "select * from {$this->table_name} where id = ? ";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -90,7 +90,7 @@ class User
     {
 
         $sql = "UPDATE
-                " . $this->table_name . "
+                {$this->table_name}
             SET
                 email = :email,
                 firstName = :firstName,
