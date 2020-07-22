@@ -14,25 +14,32 @@ $db = $database->getConnection();
 
 $user = new User($db);
 
-$user->id = isset($_GET['id']) ? $_GET['id'] : die();
+if (isset($_GET['id']) && $_GET['id'] > 0) {
 
-if($user->readOneUser()) {
+    $user->id = $_GET['id'];
 
-    $product_arr = array(
-        "id" => $user->id,
-        "email" => $user->email,
-        "firstName" => $user->firstName,
-        "lastName" => $user->lastName,
-        "createdAt" => $user->createdAt
-    );
+    if ($user->readOneUser()) {
 
-    http_response_code(200);
+        $product_arr = array(
+            "id" => $user->id,
+            "email" => $user->email,
+            "firstName" => $user->firstName,
+            "lastName" => $user->lastName,
+            "createdAt" => $user->createdAt
+        );
 
-    echo json_encode($product_arr);
-}
-else{
+        http_response_code(200);
 
-    http_response_code(404);
+        echo json_encode($product_arr);
+    } else {
 
-    echo json_encode(array("message" => "User does not exist."));
+        http_response_code(404);
+
+        echo json_encode(array("message" => "User does not exist."));
+    }
+} else {
+
+    http_response_code(400);
+
+    echo json_encode(array("message" => "Unable to update user. No valid ID."));
 }

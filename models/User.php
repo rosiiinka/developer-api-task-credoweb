@@ -36,9 +36,9 @@ class User
 
         $sql = "INSERT INTO {$this->table_name} set 
                 id = null, 
-                email = '" . $this->email . "',
-                firstName = '" . $this->firstName . "',
-                lastName = '" . $this->lastName . "',
+                email = '{$this->email}',
+                firstName = '{$this->firstName}',
+                lastName = '{$this->lastName}',
                 createdAt = now() ";
 
         $stmt = $this->conn->prepare($sql);
@@ -121,7 +121,7 @@ class User
     public function delete()
     {
 
-        $sql = "DELETE FROM " . $this->table_name . " WHERE id = ?";
+        $sql = "DELETE FROM {$this->table_name} WHERE id = ?";
 
         $stmt = $this->conn->prepare($sql);
 
@@ -140,7 +140,7 @@ class User
     function search($keywords){
 
         $sql = "SELECT * FROM 
-                " . $this->table_name . " 
+                {$this->table_name}
                 WHERE
                     email LIKE ? OR firstName LIKE ? OR lastName LIKE ?
                 ORDER BY
